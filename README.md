@@ -8,7 +8,7 @@ pip install PyPDF2==1.26.0
 ```
 
 ## Usage
-Put the files to be merged into "data" folder
+Put the files to be merged into "data" folder.
 ```bash
 python pdf_merge.py
 ```
