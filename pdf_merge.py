@@ -8,11 +8,6 @@ import os
 from PyPDF2 import PdfFileReader, PdfFileWriter
 
 
-def read_file(filenames):
-    for filename in filenames:
-        yield PdfFileReader(open(filename, "rb"), strict=False)
-
-
 def pdf_merge(input_path, out_path='out.pdf'):
     """
     :param input_path:
@@ -23,13 +18,13 @@ def pdf_merge(input_path, out_path='out.pdf'):
     filenames.sort()
 
     file_merger = PdfFileWriter()
-    for pdf in read_file(filenames):
+    for filename in filenames:
+        pdf = PdfFileReader(open(filename, "rb"), strict=False)
         for page in range(pdf.getNumPages()):
             file_merger.addPage(pdf.getPage(page))
 
-    output_stream = open(out_path, "wb")
-    file_merger.write(output_stream)
-    output_stream.close()
+    with open(out_path, "wb") as output_stream:
+        file_merger.write(output_stream)
 
 
 if __name__ == '__main__':
